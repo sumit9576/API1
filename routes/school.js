@@ -1,10 +1,34 @@
 const express = require('express');
-const router = express.Router();
-const { addSchool, listSchools } = require('../controllers/schoolController');
+const bodyParser = require('body-parser');
+const schoolRoutes = require('../routes/school'); // Adjust path if needed
+const { database } = require('../config/db');
+require('dotenv').config();
 
-router.post('/addSchool', addSchool);
+const app = express();
 
+// Middleware
+app.use(bodyParser.json());
 
-router.get('/listSchools', listSchools);
+// Routes
+app.use('/', schoolRoutes);
 
-module.exports = router;
+// Serverless handler
+let isConnected = false; // Prevent DB reconnect on every request
+
+const handler = async (req, res) => {
+  if (!isConnected) {
+    try {
+      await database();
+      console.log("Database connected successfully");
+      isConnected = true;
+    } catch (err) {
+      console.error("Database connection failed", err);
+      res.status(500).send("Database connection error");
+      return;
+    }
+  }
+
+  return app(req, res); // Pass the request to Express
+};
+
+module.exports = handler;
