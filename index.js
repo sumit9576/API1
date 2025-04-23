@@ -1,16 +1,11 @@
+// api/index.js
 const express = require('express');
 const bodyParser = require('body-parser');
-const schoolRoutes = require('./routes/school');
-require('dotenv').config();  
-
+const schoolRoutes = require('../routes/school'); // adjust the path as needed
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
-
 app.use('/', schoolRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+// Export the handler
+module.exports = app;
