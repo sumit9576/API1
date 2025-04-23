@@ -29,7 +29,7 @@ exports.listSchools = (req, res) => {
     const userLocation = { lat: userLat, lon: userLon };
     const result = schools.map((school) => {
       const schoolLocation = { lat: school.latitude, lon: school.longitude };
-      const distance = haversine(userLocation, schoolLocation) / 1000; // meters to km
+      const distance = haversine(userLocation, schoolLocation) / 1000;
       return { ...school, distance };
     });
 
