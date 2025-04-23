@@ -5,7 +5,7 @@ const schoolRoutes = require('../routes/school'); // adjust the path as needed
 const app = express();
 
 app.use(bodyParser.json());
-app.use('/', schoolRoutes);
+app.use('/API', schoolRoutes);
 
 // Export the handler
 module.exports = app;
