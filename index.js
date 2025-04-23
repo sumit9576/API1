@@ -9,6 +9,9 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+app.use('/',(req,res)=>{
+  res.json({"API":"/listSchools?latitude=37.7749&longitude=-122.4194"})
+})
 
 app.use('/', schoolRoutes);
 
